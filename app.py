@@ -115,7 +115,15 @@ STOCK_SQL = """
 @app.route("/")
 @login_required
 def dashboard():
-    return render_template("dashboard.html", rows=query(STOCK_SQL))
+    rows = query(STOCK_SQL)
+    stats = {
+        "products": len(rows),
+        "low_stock": sum(1 for r in rows if r["stock"] < r["min_stock"]),
+        "warehouses": query("SELECT COUNT(*) AS n FROM warehouse",
+                            one=True)["n"],
+        "stock_value": sum(r["stock"] * r["unit_price"] for r in rows),
+    }
+    return render_template("dashboard.html", rows=rows, stats=stats)
 
 
 # ------------------------------------------------- simple tables (CRUD)

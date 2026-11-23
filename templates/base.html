@@ -6,19 +6,20 @@
   <title>{% block title %}Stock Management System{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="{{ 'login-page' if not session.user_id }}">
   {% if session.user_id %}
+  {% macro link(url, text) %}<a href="{{ url }}" class="{{ 'active' if request.path == url or (url != '/' and request.path.startswith(url + '/')) }}">{{ text }}</a>{% endmacro %}
   <nav>
-    <span class="brand">Stock Management System</span>
-    <a href="{{ url_for('dashboard') }}">Stock</a>
-    <a href="{{ url_for('movements') }}">Movements</a>
-    <a href="{{ url_for('table_list', key='products') }}">Products</a>
-    <a href="{{ url_for('table_list', key='categories') }}">Categories</a>
-    <a href="{{ url_for('table_list', key='suppliers') }}">Suppliers</a>
-    <a href="{{ url_for('table_list', key='warehouses') }}">Warehouses</a>
-    {% if session.role == 'admin' %}<a href="{{ url_for('users') }}">Users</a>{% endif %}
+    <span class="brand"><span class="logo">SM</span>Stock Management System</span>
+    {{ link(url_for('dashboard'), 'Stock') }}
+    {{ link(url_for('movements'), 'Movements') }}
+    {{ link(url_for('table_list', key='products'), 'Products') }}
+    {{ link(url_for('table_list', key='categories'), 'Categories') }}
+    {{ link(url_for('table_list', key='suppliers'), 'Suppliers') }}
+    {{ link(url_for('table_list', key='warehouses'), 'Warehouses') }}
+    {% if session.role == 'admin' %}{{ link(url_for('users'), 'Users') }}{% endif %}
     <span class="spacer"></span>
-    <span class="who">{{ session.full_name }} ({{ session.role }})</span>
+    <span class="who">{{ session.full_name }}<span class="role {{ session.role }}">{{ session.role }}</span></span>
     <a href="{{ url_for('logout') }}">Log out</a>
   </nav>
   {% endif %}

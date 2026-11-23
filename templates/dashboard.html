@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="stats">
+  <div class="stat"><div class="label">Products</div><div class="value">{{ stats.products }}</div></div>
+  <div class="stat {{ 'warn' if stats.low_stock else 'green' }}"><div class="label">Low stock</div><div class="value">{{ stats.low_stock }}</div></div>
+  <div class="stat amber"><div class="label">Warehouses</div><div class="value">{{ stats.warehouses }}</div></div>
+  <div class="stat green"><div class="label">Stock value</div><div class="value">{{ '{:,.2f}'.format(stats.stock_value) }}</div></div>
+</div>
 <div class="head">
   <h1>Current stock</h1>
   <a class="button" href="{{ url_for('movement_new') }}">New stock movement</a>
@@ -11,7 +17,7 @@
   </thead>
   <tbody>
     {% for row in rows %}
-    <tr>
+    <tr class="{{ 'low' if row.stock < row.min_stock }}">
       <td>{{ row.name }}</td>
       <td>{{ row.category }}</td>
       <td class="num">{{ row.unit_price }}</td>
