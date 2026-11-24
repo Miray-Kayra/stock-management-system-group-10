@@ -108,9 +108,5 @@ body.login-page { min-height: 100vh; display: flex; align-items: center; justify
 body.login-page main { margin: 0; width: 100%; max-width: 400px; }
 .login { max-width: none; padding: 32px 30px; border-top: 5px solid var(--accent);
          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3); }
-.login .logo { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px;
-               margin: 0 auto 12px; border-radius: 14px; background: var(--accent);
-               color: var(--navy); font-weight: 800; font-size: 22px; }
-.login h1 { text-align: center; margin-bottom: 4px; }
-.login .subtitle { text-align: center; color: var(--muted); margin: 0 0 22px; font-size: 14px; }
+.login h1 { text-align: center; margin-bottom: 22px; }
 .login button { width: 100%; padding: 11px; margin-top: 4px; }
